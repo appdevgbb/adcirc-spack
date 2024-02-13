@@ -77,11 +77,32 @@ can run the command:
 $ spack info adcirc
 ```
 
+ADCIRC depends on specific versions of `netcdf` and `netcdf-fortran`. `netcdf-c` is also dependent on specific versions of `autoconf` and `hdf5`. To install netcdf-c:
+
+```bash
+$ spack install netcdf-c@4.2.1.1 %gcc ^autoconf@2.69 ^hdf5@1.8.12
+```
+
+To install netcdf-fortran:
+
+```bash
+$ spack install netcdf-fortran@4.4.3
+```
+
 This will print out a listing of available versions and options for use within the spack package. Unless you have specific needs,
 it is recommended to use the preferred version. While development and master are both listed as "safe", the only version that should 
 
 ```bash
-$ spack install adcirc@55.01
+$ spack install adcirc@55.01   ^netcdf-c@4.2.1.1 ^netcdf-fortran@4.4.3
+```
+
+You can check if ADCIRC was installed and what versions are available with the following command:
+
+```bash
+$ spack find adcirc
+-- linux-ubuntu22.04-x86_64_v4 / gcc@11.4.0 ---------------------
+adcirc@54.01  adcirc@55.01
+==> 2 installed packages
 ```
 
 The default build will build adcirc and all dependencies from source as specified by your spack configuration. This 
@@ -104,9 +125,9 @@ before executing the above command:
 ### Installing Intel OneAPI Compilers
 ```bash
 $ spack install intel-oneapi-compilers
-$ spack activate intel-oneapi-compilers
+$ spack load intel-oneapi-compilers
 $ spack compiler find
-$ spack deactivate intel-oneapi-compilers
+$ spack unload intel-oneapi-compilers
 ```
 
 Following that, you should see output like below showing the new Intel compilers (intel, oneapi, and dpcpp) installed:
